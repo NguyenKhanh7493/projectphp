@@ -1,0 +1,1 @@
+<footer class="footer text-center"> admin thuộc về Nguyễn Khánh </footer>

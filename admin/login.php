@@ -47,9 +47,11 @@ if(isset($_SESSION) && @$_SESSION['email'] != '' && @$_SESSION['password'] != ''
         <h3 class="box-title m-b-20">Đăng Nhập</h3>
         <div class="form-group ">
           <div class="col-xs-12">
-            <input class="form-control" type="text" name="email" placeholder="Nhập email" value="<?= @$_POST['email']?>">
+            <input class="form-control" type="email" name="email" placeholder="Nhập email" value="<?= @$_POST['email']?>">
           </div>
-          
+          <?php if (isset($errors) && in_array('email',$errors)){
+              echo "sai";
+          }?>
         </div>
         <div class="form-group">
           <div class="col-xs-12">
@@ -85,9 +87,10 @@ if(isset($_SESSION) && @$_SESSION['email'] != '' && @$_SESSION['password'] != ''
         $email = mysqli_real_escape_string($db,$email);
         $pass = mysqli_real_escape_string($db,$pass);
         if(empty($email)){
-            $errors = 'email';
+//            $errors[] = 'email';
+            echo "Bạn chưa nhập email";
         }elseif(empty($pass)){
-            $errors = 'pass';
+            echo "Bạn chưa nhập mật khẩu";
         }else{
             $sql = "SELECT * FROM users WHERE email='".$email."' and password='".MD5($pass)."'";
             $result = mysqli_query($db,$sql);
