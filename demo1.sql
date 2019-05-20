@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 19, 2019 lúc 04:53 PM
--- Phiên bản máy phục vụ: 10.1.37-MariaDB
--- Phiên bản PHP: 7.3.0
+-- Thời gian đã tạo: Th5 20, 2019 lúc 11:57 AM
+-- Phiên bản máy phục vụ: 10.1.36-MariaDB
+-- Phiên bản PHP: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -410,11 +410,11 @@ CREATE TABLE `products` (
   `hot` int(11) DEFAULT NULL,
   `best_sale` int(11) DEFAULT NULL,
   `status` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `introduction` text NOT NULL,
-  `content` longtext NOT NULL,
-  `keywords` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `introduction` text,
+  `content` longtext,
+  `keywords` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `cate_id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
   `view` int(11) DEFAULT '0',
