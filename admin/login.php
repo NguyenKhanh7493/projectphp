@@ -36,6 +36,36 @@ if(isset($_SESSION) && @$_SESSION['email'] != '' && @$_SESSION['password'] != ''
 </script>
 </head>
 <body>
+<?php
+if(isset($_POST["ok"])){
+    $errors = array();
+    $email = $_POST['email'];
+    $pass = $_POST['pass'];
+    // Xử lý để tránh MySQL injection
+    $email = stripslashes($email);
+    $pass = stripslashes($pass);
+    $email = mysqli_real_escape_string($db,$email);
+    $pass = mysqli_real_escape_string($db,$pass);
+    if(empty($email)){
+            $errors[] = 'email';
+    }elseif(empty($pass)){
+        $errors[] = 'pass';
+    }else{
+        $sql = "SELECT * FROM users WHERE email='".$email."' and password='".MD5($pass)."'";
+        $result = mysqli_query($db,$sql);
+        $data = returnRow($result);
+        if($data == NULL || $data == false){
+            $errors[] = 'email_pass';
+        }else{
+            $_SESSION['email'] = $data['email'];
+            $_SESSION['password'] = $data['password'];
+            $_SESSION['status'] = $data['status'];
+            $_SESSION['fullname'] = $data['fullname'];
+            header('location:/admin/index.php');
+        }
+    }
+}
+?>
 <!-- Preloader -->
 <div class="preloader">
   <div class="cssload-speeding-wheel"></div>
@@ -47,20 +77,26 @@ if(isset($_SESSION) && @$_SESSION['email'] != '' && @$_SESSION['password'] != ''
         <h3 class="box-title m-b-20">Đăng Nhập</h3>
         <div class="form-group ">
           <div class="col-xs-12">
-            <input class="form-control" type="email" name="email" placeholder="Nhập email" value="<?= @$_POST['email']?>">
+            <input class="form-control" type="email" name="email" placeholder="Nhập email" value="<?php if (isset($_POST['email']) && $_POST['email'] != ''){ echo $_POST['email']; }?>">
           </div>
           <?php if (isset($errors) && in_array('email',$errors)){
-              echo "sai";
+              echo '<p style="color: red;">(*) Bạn chưa nhập email</p>';
           }?>
         </div>
         <div class="form-group">
           <div class="col-xs-12">
             <input class="form-control" type="password" name="pass" placeholder="Nhập mật khẩu">
           </div>
+            <?php if (isset($errors) && in_array('pass',$errors)){
+                echo '<p style="color: red;">(*) Bạn chưa nhập mật khẩu</p>';
+            }?>
         </div>
         <div class="form-group">
           <div class="col-md-12">
             <div class="checkbox checkbox-primary pull-left p-t-0">
+                <?php if (isset($errors) && in_array('email_pass',$errors)){
+                    echo '<p style="color: red;">(*) Thất bại,sai email hoặc mật khẩu</p>';
+                }?>
               <!-- <input id="checkbox-signup" type="checkbox">
               <label for="checkbox-signup"> Remember me </label> -->
             </div>
@@ -76,37 +112,6 @@ if(isset($_SESSION) && @$_SESSION['email'] != '' && @$_SESSION['password'] != ''
     </div>
   </div>
 </section>
-<?php
-    if(isset($_POST["ok"])){
-        $errors = array();
-        $email = $_POST['email'];
-        $pass = $_POST['pass'];
-        // Xử lý để tránh MySQL injection
-        $email = stripslashes($email);
-        $pass = stripslashes($pass);
-        $email = mysqli_real_escape_string($db,$email);
-        $pass = mysqli_real_escape_string($db,$pass);
-        if(empty($email)){
-//            $errors[] = 'email';
-            echo "Bạn chưa nhập email";
-        }elseif(empty($pass)){
-            echo "Bạn chưa nhập mật khẩu";
-        }else{
-            $sql = "SELECT * FROM users WHERE email='".$email."' and password='".MD5($pass)."'";
-            $result = mysqli_query($db,$sql);
-            $data = returnRow($result);
-            if($data == NULL || $data == false){
-                echo "sai mật khẩu hoặc email";
-            }else{
-                $_SESSION['email'] = $data['email'];
-                $_SESSION['password'] = $data['password'];
-                $_SESSION['status'] = $data['status'];
-                $_SESSION['fullname'] = $data['fullname'];
-                header('location:/admin/index.php');
-            }
-        }
-    }
-?>
 <!-- jQuery -->
 <script src="<?=base_url?>/admin/assets/plugins/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap Core JavaScript -->

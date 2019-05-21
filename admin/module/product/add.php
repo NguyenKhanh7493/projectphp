@@ -21,17 +21,19 @@
             print_r($img);
             if(empty($name)){
                 $errors[] = 'name';
-            }elseif ($cate){
+            }elseif (empty($cate)){
                 $errors[] = 'cate_id';
-            }elseif ($user){
+            }elseif (empty($user)){
                 $errors[] = 'user_id';
             }elseif (empty($img['name'])){
                 $errors[] = 'img_name';
             }elseif (empty($status)){
                 $errors[] = 'status';
-            }elseif (count($img_arr['name']) == ''){
+            }elseif (empty($img_arr['name']) == ''){
                 $errors[] = 'img_arr_name';
-            }else{}
+            }else{
+                echo "thành công";
+            }
         }
         ?>
 <!-- Preloader -->
@@ -77,8 +79,8 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Chọn menu</label>
                                         <select class="form-control" data-placeholder="Choose a Category" name="cate_id" tabindex="1">
-                                            <option value="">Nhập cate</option>
-                                            <option value="1">dell</option>
+                                            <option value="" selected="selected">Nhập cate</option>
+                                            <option value="1" <?php if (isset($_POST['cate_id']) && $_POST['cate_id'] == 1){?> selected="selected" <?php }?>>dell</option>
                                         </select>
                                         <?php
                                         if (isset($errors) && in_array('cate_id',$errors)){
@@ -89,8 +91,8 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Chọn user</label>
                                         <select class="form-control" data-placeholder="Choose a Category" name="user_id" tabindex="1">
-                                            <option value="">Nhập user</option>
-                                            <option value="1">Khánh</option>
+                                            <option value="" selected="selected">Nhập user</option>
+                                            <option value="1" <?php if (isset($_POST['user_id']) && $_POST['user_id'] == 1){?> selected="selected" <?php }?>>Khánh</option>
                                         </select>
                                         <?php
                                         if (isset($errors) && in_array('user_id',$errors)){
@@ -100,7 +102,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">status</label>
-                                        <input type="text" class="form-control" name="status" placeholder="nhập status" value="<?php @$_POST['status']?>">
+                                        <input type="text" class="form-control" name="status" placeholder="nhập status" value="<?php if (isset($_POST['status']) && $_POST['status'] != '') { echo $_POST['status']; }?>">
                                         <?php
                                         if (isset($errors) && in_array('status',$errors)){
                                             echo '<p style="color: red;">(*) Bạn chưa nhập trạng thái</p>';
@@ -113,7 +115,7 @@
                                             <input type="file" id="input-file-disable-remove" name="avatar" class="dropify" data-show-remove="true" multiple value="" />
                                             <?php
                                             if (isset($errors) && in_array('img_name',$errors)){
-                                                echo '<p style="color: red;">(*) Bạn chưa chọn ảnh nhập trạng thái</p>';
+                                                echo '<p style="color: red;">(*) Bạn chưa chọn ảnh</p>';
                                             }
                                             ?>
                                         </div>
@@ -124,7 +126,7 @@
                                             <input type="file" id="input-file-disable-remove" name="image_pro" class="dropify" data-show-remove="true" multiple value="" />
                                             <?php
                                             if (isset($errors) && in_array('status',$errors,true)){
-                                                echo '<p style="color: red;">(*) Bạn chưa chọn ảnh sản phẩm</p>';
+                                                echo '<p style="color: red;">(*) Bạn chưa chọn</p>';
                                             }
                                             ?>
                                         </div>
