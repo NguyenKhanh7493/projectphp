@@ -9,6 +9,31 @@
 <!-- Mirrored from eliteadmin.themedesigner.in/demos/eliteadmin-crm/form-basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 09:39:47 GMT -->
 <?php include ('../../layout/head.php');?>
 <body class="fix-sidebar">
+        <?php
+        if (isset($_POST['add_pro'])){
+            $errors = array();
+            $name = $_POST['name'];
+            $cate = $_POST['cate_id'];
+            $user = $_POST['user_id'];
+            $status = $_POST['status'];
+            $img = $_FILES['avatar'];
+            $img_arr = $_FILES['image_pro'];
+            print_r($img);
+            if(empty($name)){
+                $errors[] = 'name';
+            }elseif ($cate){
+                $errors[] = 'cate_id';
+            }elseif ($user){
+                $errors[] = 'user_id';
+            }elseif (empty($img['name'])){
+                $errors[] = 'img_name';
+            }elseif (empty($status)){
+                $errors[] = 'status';
+            }elseif (count($img_arr['name']) == ''){
+                $errors[] = 'img_arr_name';
+            }else{}
+        }
+        ?>
 <!-- Preloader -->
 <div class="preloader">
     <div class="cssload-speeding-wheel"></div>
@@ -42,7 +67,12 @@
                                 <div class="col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Tên sản phẩm</label>
-                                        <input type="text" class="form-control" name="name" placeholder="Tên sản phẩm">
+                                        <input type="text" class="form-control" name="name" placeholder="Tên sản phẩm" value="<?php if (isset($_POST['name']) && $_POST['name'] != '') { echo $_POST['name']; }?>">
+                                        <?php
+                                        if (isset($errors) && in_array('name',$errors)){
+                                            echo '<p style="color: red;">(*) Bạn chưa nhập tên</p>';
+                                        }
+                                        ?>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Chọn menu</label>
@@ -50,6 +80,11 @@
                                             <option value="">Nhập cate</option>
                                             <option value="1">dell</option>
                                         </select>
+                                        <?php
+                                        if (isset($errors) && in_array('cate_id',$errors)){
+                                            echo '<p style="color: red;">(*) Bạn chưa chọn cate</p>';
+                                        }
+                                        ?>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Chọn user</label>
@@ -57,21 +92,41 @@
                                             <option value="">Nhập user</option>
                                             <option value="1">Khánh</option>
                                         </select>
+                                        <?php
+                                        if (isset($errors) && in_array('user_id',$errors)){
+                                            echo '<p style="color: red;">(*) Bạn chưa chọn admin</p>';
+                                        }
+                                        ?>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">status</label>
-                                        <input type="text" class="form-control" name="status" placeholder="nhập status">
+                                        <input type="text" class="form-control" name="status" placeholder="nhập status" value="<?php @$_POST['status']?>">
+                                        <?php
+                                        if (isset($errors) && in_array('status',$errors)){
+                                            echo '<p style="color: red;">(*) Bạn chưa nhập trạng thái</p>';
+                                        }
+                                        ?>
                                     </div>
                                     <div class="form-group">
                                         <div class="white-box">
                                             <h3 class="box-title">Ảnh đại diện </h3>
                                             <input type="file" id="input-file-disable-remove" name="avatar" class="dropify" data-show-remove="true" multiple value="" />
+                                            <?php
+                                            if (isset($errors) && in_array('img_name',$errors)){
+                                                echo '<p style="color: red;">(*) Bạn chưa chọn ảnh nhập trạng thái</p>';
+                                            }
+                                            ?>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="white-box">
                                             <h3 class="box-title">Ảnh sản phẩm </h3>
-                                            <input type="file" id="input-file-disable-remove" name="avatar" class="dropify" data-show-remove="true" multiple value="" />
+                                            <input type="file" id="input-file-disable-remove" name="image_pro" class="dropify" data-show-remove="true" multiple value="" />
+                                            <?php
+                                            if (isset($errors) && in_array('status',$errors,true)){
+                                                echo '<p style="color: red;">(*) Bạn chưa chọn ảnh sản phẩm</p>';
+                                            }
+                                            ?>
                                         </div>
                                     </div>
                                     <div id="showImg" style="text-align: center">
@@ -93,19 +148,8 @@
     </div>
 </div>
 <?php include ('../../layout/script.php');?>
-</body>
 
-<?php
-if (isset($_POST['add_pro'])){
-    $name = $_POST['name'];
-    $title = $_POST['title'];
-    $intro = $_POST['introduction'];
-    $content = $_POST['content'];
-    $key = $_POST['keywords'];
-    $des = $_POST['description'];
-    $cate = $_POST['cate_id'];
-    $user = $_POST['user_id'];
-    $status = $_POST['status'];
-}
-?>
+
+
+</body>
 </html>
