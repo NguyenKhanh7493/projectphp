@@ -1,7 +1,17 @@
 <?php
     session_start();
+    include ('../../config/database.php');
+    include ('../../config/function.php');
     include ('../../config/define.php');
     $title = 'Thêm sản phẩm';
+    $sql = "select * from users WHERE status = 1";
+    $result = mysqli_query($db,$sql);
+    $user_id = returnDataRow($result);
+
+    //load danh sách cate
+    $query = "select * from cates WHERE status = 1";
+    $result = mysqli_query($db,$query);
+    $cate_id = returnDataRow($result);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +42,15 @@
             }elseif (empty($img_arr['name']) == ''){
                 $errors[] = 'img_arr_name';
             }else{
-                echo "thành công";
+                $img_name = $img['name'];
+                $img_size = $img['name'];
+                $img_type = $img['type'];
+                $img_tmp = $img['tmp_name'];
+                $img_err = array();
+                if ($img_type == 'image/jpeg' || $img_type == 'image/png' || $img_type = 'image/gif'){
+                }else{
+                    $img_err[] = 'type';
+                }
             }
         }
         ?>
@@ -80,7 +98,9 @@
                                         <label for="exampleInputEmail1">Chọn menu</label>
                                         <select class="form-control" data-placeholder="Choose a Category" name="cate_id" tabindex="1">
                                             <option value="" selected="selected">Nhập cate</option>
-                                            <option value="1" <?php if (isset($_POST['cate_id']) && $_POST['cate_id'] == 1){?> selected="selected" <?php }?>>dell</option>
+                                            <?php foreach ($cate_id as $id_cate){?>
+                                            <option value="1" <?php if (isset($_POST['cate_id']) && $_POST['cate_id'] == 1){?> selected="selected" <?php }?>><?php echo $id_cate['name']?></option>
+                                            <?php }?>
                                         </select>
                                         <?php
                                         if (isset($errors) && in_array('cate_id',$errors)){
@@ -92,7 +112,9 @@
                                         <label for="exampleInputEmail1">Chọn user</label>
                                         <select class="form-control" data-placeholder="Choose a Category" name="user_id" tabindex="1">
                                             <option value="" selected="selected">Nhập user</option>
-                                            <option value="1" <?php if (isset($_POST['user_id']) && $_POST['user_id'] == 1){?> selected="selected" <?php }?>>Khánh</option>
+                                            <?php foreach ($user_id as $id_user){?>
+                                            <option value="1" <?php if (isset($_POST['user_id']) && $_POST['user_id'] == 1){?> selected="selected" <?php }?>><?php echo $id_user['name']?></option>
+                                            <?php }?>
                                         </select>
                                         <?php
                                         if (isset($errors) && in_array('user_id',$errors)){
@@ -116,6 +138,10 @@
                                             <?php
                                             if (isset($errors) && in_array('img_name',$errors)){
                                                 echo '<p style="color: red;">(*) Bạn chưa chọn ảnh</p>';
+                                            }
+
+                                            if (isset($img_err) && in_array('type',$img_err)){
+                                                echo '<p style="color: red;">(*) Bạn nhập sai định dạng ảnh</p>';
                                             }
                                             ?>
                                         </div>
