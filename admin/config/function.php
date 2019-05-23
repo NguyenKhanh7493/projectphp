@@ -66,4 +66,24 @@
 	        return $str;
 	    }
 	}
+	function upload_image($file = null,$folder = ''){
+        $img_name = '';
+        $type = $file['type'];
+        $name = $file['name'];
+        $tmp_name = $file['tmp_name'];
+        $size = $file['size'];
+        if ($type == 'image/jpeg' || $type == 'image/png' || $type == 'image/gif'){
+            if ($size < 10485760){
+                if (move_uploaded_file($tmp_name,$folder.$name)){
+                    $img_name = $name;
+                }
+            }else{
+                echo "kích thước ảnh quá lớn";
+            }
+        }else{
+            echo "Bạn nhập sai định dạng ảnh";
+        }
+
+            return $img_name;
+    }
 ?>

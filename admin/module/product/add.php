@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if (!isset($_SESSION['email']) || !isset($_SESSION['status'])){
+        header('location:/admin/login.php');
+    }
     include ('../../config/database.php');
     include ('../../config/function.php');
     include ('../../config/define.php');
@@ -27,7 +30,10 @@
             $user = $_POST['user_id'];
             $status = $_POST['status'];
             $img = $_FILES['avatar'];
-            $img_arr = $_FILES['image_pro'];
+//            $img_arr = $_FILES['image_pro'];
+//        elseif (empty($img_arr['name']) == ''){
+//            $errors[] = 'img_arr_name';
+//        }
             print_r($img);
             if(empty($name)){
                 $errors[] = 'name';
@@ -39,8 +45,6 @@
                 $errors[] = 'img_name';
             }elseif (empty($status)){
                 $errors[] = 'status';
-            }elseif (empty($img_arr['name']) == ''){
-                $errors[] = 'img_arr_name';
             }else{
                 $img_name = $img['name'];
                 $img_size = $img['name'];
@@ -49,7 +53,11 @@
                 $img_err = array();
                 if ($img_type == 'image/jpeg' || $img_type == 'image/png' || $img_type = 'image/gif'){
                 }else{
-                    $img_err[] = 'type';
+                    $img_avatar_name = upload_image($img,'../../public/images/product/avatar');
+                    $rewrite = replace($name);
+                    $sql = "INSERT INTO `products` (`name`,`alias`,`avatar`,`status`,`cate_id`,`user_id`)
+                            VALUES ('".$name."','".$rewrite."','".$img_avatar_name."','".$status."','".$cate."','".$user."')";
+                    print_r($sql);
                 }
             }
         }
@@ -99,7 +107,7 @@
                                         <select class="form-control" data-placeholder="Choose a Category" name="cate_id" tabindex="1">
                                             <option value="" selected="selected">Nhập cate</option>
                                             <?php foreach ($cate_id as $id_cate){?>
-                                            <option value="1" <?php if (isset($_POST['cate_id']) && $_POST['cate_id'] == 1){?> selected="selected" <?php }?>><?php echo $id_cate['name']?></option>
+                                            <option value="<?php echo  $id_cate['id']?>" <?php if (isset($_POST['cate_id']) && $_POST['cate_id'] == 1){?> selected="selected" <?php }?>><?php echo $id_cate['name']?></option>
                                             <?php }?>
                                         </select>
                                         <?php
@@ -113,7 +121,7 @@
                                         <select class="form-control" data-placeholder="Choose a Category" name="user_id" tabindex="1">
                                             <option value="" selected="selected">Nhập user</option>
                                             <?php foreach ($user_id as $id_user){?>
-                                            <option value="1" <?php if (isset($_POST['user_id']) && $_POST['user_id'] == 1){?> selected="selected" <?php }?>><?php echo $id_user['name']?></option>
+                                            <option value="<?php echo $id_user['id']?>" <?php if (isset($_POST['user_id']) && $_POST['user_id'] == 1){?> selected="selected" <?php }?>><?php echo $id_user['name']?></option>
                                             <?php }?>
                                         </select>
                                         <?php
@@ -146,17 +154,17 @@
                                             ?>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="white-box">
-                                            <h3 class="box-title">Ảnh sản phẩm </h3>
-                                            <input type="file" id="input-file-disable-remove" name="image_pro" class="dropify" data-show-remove="true" multiple value="" />
-                                            <?php
-                                            if (isset($errors) && in_array('status',$errors,true)){
-                                                echo '<p style="color: red;">(*) Bạn chưa chọn</p>';
-                                            }
-                                            ?>
-                                        </div>
-                                    </div>
+<!--                                    <div class="form-group">-->
+<!--                                        <div class="white-box">-->
+<!--                                            <h3 class="box-title">Ảnh sản phẩm </h3>-->
+<!--                                            <input type="file" id="input-file-disable-remove" name="image_pro" class="dropify" data-show-remove="true" multiple value="" />-->
+<!--                                            --><?php
+//                                            if (isset($errors) && in_array('status',$errors,true)){
+//                                                echo '<p style="color: red;">(*) Bạn chưa chọn</p>';
+//                                            }
+//                                            ?>
+<!--                                        </div>-->
+<!--                                    </div>-->
                                     <div id="showImg" style="text-align: center">
                                         <div class="form-group" name="parentImg">
                                             <img src="" alt="" width="150">
