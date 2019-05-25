@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6fdaac9c-7b99-47da-8822-cf4bc66537e0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/admin/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/module/product/add.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/module/product/add.php" afterDir="false" />
-    </list>
+    <list default="true" id="6fdaac9c-7b99-47da-8822-cf4bc66537e0" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/module/product/add.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1477">
-              <caret line="94" column="145" selection-start-line="94" selection-start-column="145" selection-end-line="94" selection-end-column="145" />
+            <state relative-caret-position="253">
+              <caret line="22" column="35" lean-forward="true" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
               <folding>
                 <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
@@ -160,16 +157,15 @@
       <updated>1558143912951</updated>
       <workItem from="1558143920539" duration="15858000" />
       <workItem from="1558230117106" duration="9163000" />
-      <workItem from="1558443498447" duration="4893000" />
+      <workItem from="1558443498447" duration="4899000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29914000" />
+    <option name="totallyTimeSpent" value="29920000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25037822" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -352,8 +348,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/module/product/add.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1477">
-          <caret line="94" column="145" selection-start-line="94" selection-start-column="145" selection-end-line="94" selection-end-column="145" />
+        <state relative-caret-position="253">
+          <caret line="22" column="35" lean-forward="true" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
           <folding>
             <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
