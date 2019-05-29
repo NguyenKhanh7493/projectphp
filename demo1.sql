@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 27, 2019 lúc 11:47 AM
+-- Thời gian đã tạo: Th5 29, 2019 lúc 10:32 AM
 -- Phiên bản máy phục vụ: 10.1.36-MariaDB
 -- Phiên bản PHP: 7.2.11
 
@@ -156,6 +156,18 @@ CREATE TABLE `images` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Đang đổ dữ liệu cho bảng `images`
+--
+
+INSERT INTO `images` (`id`, `image_name`, `title`, `item_type`, `item_id`, `url`, `created_at`, `updated_at`) VALUES
+(6, '9c00599f6421c1a9e3f6645149970bc4.jpg', NULL, 2, 45, NULL, NULL, NULL),
+(7, '607acbc9984e78d0bd61e8d9cd2b31f9.jpg', NULL, 2, 45, NULL, NULL, NULL),
+(8, '0d88bababff4a67a5dc7994a33ec8ed6.jpg', NULL, 2, 46, NULL, NULL, NULL),
+(9, 'chibi1.jpg', NULL, 2, 46, NULL, NULL, NULL),
+(10, 'hinh-nen-dien-thoai-doc-dao-1.jpg', NULL, 2, 47, NULL, NULL, NULL),
+(11, 'anh-cap-doi-chibi-dep_120351397 (1).jpg', NULL, 2, 48, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -398,9 +410,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `alias`, `num`, `price_old`, `price_new`, `percent`, `avatar`, `home`, `new`, `hot`, `best_sale`, `status`, `title`, `introduction`, `content`, `keywords`, `description`, `cate_id`, `user_id`, `view`, `cart`, `created_at`, `updated_at`) VALUES
-(37, 'h', 'h', 0, 0, NULL, NULL, 'anh-chibi-dep-va-de-thuong-nhat_120351929.jpg', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 10, 1, 0, NULL, NULL, NULL),
-(38, 'Nguyễn Như Khánh', 'nguyen-nhu-khanh', 0, 0, NULL, NULL, 'anh-chibi-dep-va-de-thuong-nhat_120351929.jpg', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 4, 1, 0, NULL, NULL, NULL),
-(39, 'Nguyễn Như Khánh', 'nguyen-nhu-khanh', 0, 0, NULL, NULL, 'anh-chibi-dep-va-de-thuong-nhat_120351929.jpg', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 4, 1, 0, NULL, NULL, NULL);
+(45, 'Nguyễn Như Khánh', '', 0, 0, NULL, NULL, 'anh-cap-doi-chibi-dep_120351397 (1).jpg', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 4, 1, 0, NULL, NULL, NULL),
+(46, 'Đoàn Thị Xuân Hiếu', '', 0, 0, NULL, NULL, 'hinh-anh-chibi-cap-doi-dang-yeu_120352632.jpg', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 5, 2, 0, NULL, NULL, NULL),
+(47, 'a', '', 0, 0, NULL, NULL, '2520d33ab706f2a5c34aaa57940b98db.jpg', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 5, 1, 0, NULL, NULL, NULL),
+(48, 'b c', '', 0, 0, NULL, NULL, 'hinh-anh-chibi-cap-doi-dang-yeu_120352632.jpg', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 4, 2, 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -640,7 +653,7 @@ ALTER TABLE `customer_buy`
 -- AUTO_INCREMENT cho bảng `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `invoices`
@@ -670,7 +683,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT cho bảng `receive_email`

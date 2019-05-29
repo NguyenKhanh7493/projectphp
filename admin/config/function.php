@@ -67,49 +67,101 @@
 	    }
 	}
 	//upload 1 ảnh avatar
-	function upload_image($file = null,$folder = ''){
-        $img_name = '';
-        $type = $file['type'];
+//	function upload_image($file = null,$folder = ''){
+//        $img_name = '';
+//        $type = $file['type'];
+//        $name = $file['name'];
+//        $tmp_name = $file['tmp_name'];
+//        $size = $file['size'];
+//        if ($type == 'image/jpeg' || $type == 'image/png' || $type == 'image/gif'){
+//            if ($size < 10485760){
+//                if (move_uploaded_file($tmp_name,$folder.$name)){
+//                    $img_name = $name;
+//                }
+//            }else{
+//                echo "kích thước ảnh quá lớn";
+//            }
+//        }else{
+//            echo "Bạn nhập sai định dạng ảnh";
+//        }
+//
+//            return $img_name;
+//    }
+
+    //Hàm 1 ảnh được cải tiến
+    function upload_avatar($file = null,$folder = ''){
+        $avatar_name = '';
         $name = $file['name'];
+        $type = $file['type'];
         $tmp_name = $file['tmp_name'];
         $size = $file['size'];
         if ($type == 'image/jpeg' || $type == 'image/png' || $type == 'image/gif'){
             if ($size < 10485760){
                 if (move_uploaded_file($tmp_name,$folder.$name)){
-                    $img_name = $name;
+                    $avatar_name = $name;
                 }
             }else{
-                echo "kích thước ảnh quá lớn";
+                return ["errors"=>"Kích thước ảnh quá lớn"];
             }
         }else{
-            echo "Bạn nhập sai định dạng ảnh";
+            return ["errors" => "Bạn nhập sai định dạng ảnh"];
         }
+        return $avatar_name;
+    }
 
-            return $img_name;
+    //Upload nhiều ảnh được cải tiến
+    function upload_images_arr($file = null,$folder = ''){
+        if (!is_array($file)){
+            return upload_images_arr($file,$folder);
+        }
+        $image_count = count($file['name']);
+        $return_name = [];
+        $return_err = [];
+        for ($i=0;$i<$image_count;$i++){
+            $name = $file['name'][$i];
+            $type = $file['type'][$i];
+            $tmp_name = $file['tmp_name'][$i];
+            $size = $file['size'][$i];
+            if ($type == 'image/jpeg' || $type == 'image/png' || $type == 'image/gif'){
+                if ($size < 10485760){
+                    if (move_uploaded_file($tmp_name,$folder.$name)){
+                        $return_name['success'][$i] = $name;
+                    }
+                }else{
+                    $return_err['errors'][$i] = "Bạn nhập kích thước ảnh quá lớn";
+                }
+            }else{
+                $return_err['errors'][$i] = "Bạn nhập sai định dạng ảnh";
+            }
+        }
+        if ($return_err){
+            return $return_err;
+        }
+        return $return_name;
     }
 
     //hàm upload nhiều ảnh
-    function muitiple_upload($file = NULL,$folder = ''){
-        $imgNameArray = array();
-        $num_img 	  = count($file['name']);
-        if($num_img > 0){
-            pre ($file['name'][0]);
-            for ($i=0; $i < $num_img ; $i++) {
-                $type   	=  $file['type'][$i];
-                $name  		=  $file['name'][$i];
-                $tmp_name   =  $file['tmp_name'][$i];
-                $size   	=  $file['size'][$i];
-                if($type == 'image/jpeg' || $type =='image/png' || $type == 'image/gif'){
-                    if($size < 10485760){
-                        if(move_uploaded_file($tmp_name,$folder.$name )){
-                            $imgNameArray[$i] = $name;
-                        }
-                    }
-                }
-            }
-        }
-        return $imgNameArray;
-    }
+//    function muitiple_upload($file = NULL,$folder = ''){
+//        $imgNameArray = array();
+//        $num_img 	  = count($file['name']);
+//        if($num_img > 0){
+//            pre ($file['name'][0]);
+//            for ($i=0; $i < $num_img ; $i++) {
+//                $type   	=  $file['type'][$i];
+//                $name  		=  $file['name'][$i];
+//                $tmp_name   =  $file['tmp_name'][$i];
+//                $size   	=  $file['size'][$i];
+//                if($type == 'image/jpeg' || $type =='image/png' || $type == 'image/gif'){
+//                    if($size < 10485760){
+//                        if(move_uploaded_file($tmp_name,$folder.$name )){
+//                            $imgNameArray[$i] = $name;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return $imgNameArray;
+//    }
 
     function stripUnicode($str){
         if(!$str) return false;
@@ -143,5 +195,16 @@
         $str = mb_convert_case($str,MB_CASE_LOWER,'utf-8');
         $str = str_replace(' ', '-', $str);
         return $str ;
+    }
+    function controller(){
+        if(isset($_GET['module']) && $_GET['module'] != ''){
+            $module = $_GET['module'];
+            switch ($module){
+                case 'product' : include_once('../module/product/controller.php');break;
+                default : include_once('../layout/content.php');break;
+            }
+        }else{
+            include_once('../layout/content.php');
+        }
     }
 ?>

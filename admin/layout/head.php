@@ -8,6 +8,9 @@
     <title>Trang quản trị hệ thống</title>
     <!-- Bootstrap Core CSS -->
     <link href="<?=base_url?>/admin/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- <link href="<?=base_url?>/admin/assets/plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?=base_url?>/admin/assets/cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" /> -->
     <!-- Menu CSS -->
     <link href="<?=base_url?>/admin/assets/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
     <!-- morris CSS -->

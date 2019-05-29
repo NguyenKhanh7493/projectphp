@@ -43,21 +43,41 @@
                 $errors[] = 'status';
             }elseif (empty($img['name'])){
                 $errors[] = 'img_name';
-            }elseif ($img_arr['name']){
+            }elseif (empty($img_arr['name'])){
                 $errors[] = 'image_pro';
             }else{
-                $img_avatar_name = upload_image($img,'../../public/images/product/avatar/');
-                if (file_exists('../../public/images/product/avatar/')){
-                    echo "trùng ảnh";
+                $img_avatar_name = upload_avatar($img,'../../public/images/product/avatar/');
+                if (isset($img_avatar_name['errors'])){
+                    $errors['img_name'] = $img_avatar_name['errors'];
                 }
+                if (file_exists('../../public/images/product/avatar/'.$img['name'])){
+                    $errors['img_name'] = "trùng ảnh";
+                }
+                $img_arr_name = upload_images_arr($img_arr,'../../public/images/product/');
+                if (isset($img_arr_name['errors'])){
+                    $errors['image_pro'] = $img_arr_name['errors'][0];
+                }
+//                if (file_exists('../../public/images/product/'.$img_arr['name'])){
+//                    $errors['image_pro'][0] = 'trùng ảnh sản phẩm';
+//                }
+                var_dump($img_arr_name);
                 $rewrite = changeTitle($name);
-                $sql = "INSERT INTO `products` (`name`,`alias`,`avatar`,`status`,`cate_id`,`user_id`)
-                            VALUES ('".$name."','".$rewrite."','".$img_avatar_name."','".$status."','".$cate."','".$user."')";
-                print_r($sql);
-                echo "Thành công";
+                $sql = "INSERT INTO `products` (`name`,`avatar`,`status`,`cate_id`,`user_id`) 
+                        VALUES ('".$name."','".$img_avatar_name."','".$status."','".$cate."','".$user."')";
                 if (mysqli_query($db,$sql)){
-                    echo $success ;
-                    $sql = '';
+                    $sql = 'select id from products ORDER BY id DESC LIMIT 1';
+                    $result = mysqli_query($db,$sql);
+                    $id = 0;
+                    $item_type = 2;
+                    while ($item = mysqli_fetch_assoc($result)){
+                        $id = $item['id'];
+                        break;
+                    }
+                    for ($i=0;$i< count($img_arr_name['success']);$i++){
+                        $sql = "INSERT INTO `images` (`image_name`,`item_type`,`item_id`) VALUES ('".$img_arr_name['success'][$i]."','".$item_type."','".$id."')";
+                        mysqli_query($db,$sql);
+                        usleep(500);
+                    }
                 }else{
                     echo "Thất bại";
                 }
