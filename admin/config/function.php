@@ -99,6 +99,8 @@
             if ($size < 10485760){
                 if (move_uploaded_file($tmp_name,$folder.$name)){
                     $avatar_name = $name;
+                }else{
+                    return ["errors"=>translate('Kích thước ảnh quá lớn')];
                 }
             }else{
                 return ["errors"=>"Kích thước ảnh quá lớn"];
@@ -200,11 +202,16 @@
         if(isset($_GET['module']) && $_GET['module'] != ''){
             $module = $_GET['module'];
             switch ($module){
-                case 'product' : include_once('../module/product/controller.php');break;
-                default : include_once('../layout/content.php');break;
+                case 'product' : include_once(path_root.'module/product/controller.php');break;
+                default : include_once(path_root.'layout/content.php');break;
             }
         }else{
-            include_once('../layout/content.php');
+            include_once(path_root.'layout/content.php');
         }
+    }
+    function translate($key,$file = 'sys'){
+        $folder_langague = isset($_SESSION['language']) ? $_SESSION['language'] : 'vi';
+        $langugae = require_once(path_root.'langugues/'.$folder_langague.'/'.$file.'.php');
+        return isset($langugae[$key])?$langugae[$key]:$key;
     }
 ?>

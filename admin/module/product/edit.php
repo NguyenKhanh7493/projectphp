@@ -1,2 +1,2 @@
 <?php
-echo "trang edit nè"
+echo "trang edit nè";

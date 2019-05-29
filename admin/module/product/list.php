@@ -97,7 +97,16 @@ include ('../../config/define.php');
             </table>
                 <div class="pagination">
                     <ul class="pagination">
+                        <!--
+                            -> first_page // khi page > 1
+                            -> 5 page đầu 1-5 5-9 9-> 9+5 // page_curent > 4 && page_curent <  total - 4 ? page_curent -> page_curent + 4
+                            -> ... 100 page //  page_curent < check total - 4
+                            //-> 5 page cuối
+                            -> last _page // khi page < total page
+
+                        -->
                         <?php
+
                             if ($current_page > 1 && $total_page > 1){
                                 echo '<li><a href="/admin/module/product/list.php?page='.($current_page-1).'">&laquo;</a></li>';
                             }

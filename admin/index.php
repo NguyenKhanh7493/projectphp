@@ -1,10 +1,12 @@
 <?php
     session_start();
+    $_SESSION['language'] = 'vi';
     if(!isset($_SESSION['email']) || !isset($_SESSION['status'])){
         header('location:/admin/login.php');
     }
 
     include('config/define.php');
+
     include ('config/function.php');
 ?>
 <!DOCTYPE html>
@@ -24,6 +26,7 @@
     <!-- Page Content -->
     <div id="page-wrapper">
         <div class="container-fluid">
+            <!--breadcrumb-->
             <div class="row bg-title">
                 <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
                     <h4 class="page-title">Chào mừng bạn đến với trang quản trị</h4>
@@ -37,7 +40,11 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+            <!--end breadcrumb-->
+
+            <!--container-->
             <?php controller();?>
+            <!--end container-->
         </div>
         <!-- /.container-fluid -->
         <?php include('layout/footer.php');?>
