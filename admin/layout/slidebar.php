@@ -168,8 +168,8 @@
             <li class="nav-small-cap">--- Proffessional</li>
             <li><a href="javascript:void(0);" class="waves-effect"><i class="icon-people fa-fw"></i> <span class="hide-menu">Sản phẩm<span class="fa arrow"></span></span></a>
                 <ul class="nav nav-second-level">
-                    <li> <a href="<?=base_url?>/admin/module/product/add.php">Thêm sản phẩm</a></li>
-                    <li> <a href="<?=base_url?>/admin/module/product/list.php">Danh sách</a></li>
+                    <li> <a href="<?=base_url?>/admin/?module=product&action=add">Thêm sản phẩm</a></li>
+                    <li> <a href="<?=base_url?>/admin/?module=product&action=list">Danh sách</a></li>
                 </ul>
             </li>
             <li><a href="javascript:void(0);" class="waves-effect"><i class="icon-docs fa-fw"></i> <span class="hide-menu">Reports<span class="fa arrow"></span></span></a>

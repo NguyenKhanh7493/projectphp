@@ -1,19 +1,4 @@
 <?php
-session_start();
-if (!isset($_SESSION['email']) || !isset($_SESSION['status'])){
-    header('location:/admin/login.php');
-}
-include ('../../config/database.php');
-include ('../../config/function.php');
-include ('../../config/define.php');
-?>
-
-<!DOCTYPE html>  
-<html lang="en">
-<?php include ('../../layout/head.php');?>
-
-<body class="fix-sidebar">
-<?php
     $sql = "SELECT p.name as name_pro , p.avatar,p.user_id,p.cate_id,p.status,p.id,u.name as name_user,c.name as name_cate
             FROM products p INNER JOIN cates c ON p.cate_id = c.id
                             INNER JOIN  users u ON p.user_id = u.id LIMIT 2";
@@ -40,26 +25,6 @@ include ('../../config/define.php');
    $result = mysqli_query($db,$sql);
 //    pre($name);die();
 ?>
-<!-- Preloader -->
-<div class="preloader">
-  <div class="cssload-speeding-wheel"></div>
-</div>
-<div id="wrapper">
-    <?php include ('../../layout/slidebar.php');?>
-  <div id="page-wrapper">
-    <div class="container-fluid">
-      <div class="row bg-title">
-        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-          <h4 class="page-title">Data Table</h4>
-        </div>
-        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-          <ol class="breadcrumb">
-<!--            <li><a href="#">Dashboard</a></li>-->
-<!--            <li><a href="#">Table</a></li>-->
-<!--            <li class="active">Data Table</li>-->
-          </ol>
-        </div>
-      </div>
       <div class="row">
         <div class="col-sm-12">
           <div class="white-box">
@@ -136,14 +101,3 @@ include ('../../config/define.php');
           </div>
         </div>
       </div>
-    </div>
-    <!-- /.container-fluid -->
-      <?php include ('../../layout/footer.php');?>
-  </div>
-  <!-- /#page-wrapper -->
-</div>
-<?php include ('../../layout/script.php');?>
-</body>
-
-<!-- Mirrored from eliteadmin.themedesigner.in/demos/eliteadmin-crm/data-table.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 09:40:39 GMT -->
-</html>

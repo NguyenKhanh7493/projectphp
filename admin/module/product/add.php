@@ -1,12 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 5/29/2019
- * Time: 10:10 PM
- */
-echo translate('test cc','app');
+$sql = "select * from users WHERE status = 1";
+$result = mysqli_query($db,$sql);
+$user_id = returnDataRow($result);
+pre($user_id);
 ?>
+
+
 <?php
 if (isset($_POST['add_pro'])){
     $errors = array();
@@ -24,6 +23,18 @@ if (isset($_POST['add_pro'])){
 
     if (empty($cate)){
         $errors['cate_id'] = translate('Please! input category');
+    }
+    if (empty($user)){
+        $errors['user_id'] = translate('Please! input user');
+    }
+    if (empty($status)){
+        $errors['status'] = translate('Please! input status');
+    }
+    if (empty($img)){
+        $errors['img'] = translate('Please! input avatar');
+    }
+    if (empty($img_arr)){
+        $errors['img_arr'] = translate('Please! input image product');
     }
 
     $img_avatar_name = upload_avatar($img,'../../public/images/product/avatar/');
@@ -50,7 +61,6 @@ if (isset($_POST['add_pro'])){
                         VALUES ('".$name."','".$img_avatar_name."','".$status."','".$cate."','".$user."')";
         $result = mysqli_query($db,$sql);
         var_dump($result);
-        var_dump(mysql_fetch_assoc($result));
         if(!$result){
             $errors['insert'] = translate('Database not found!');
         }else{
@@ -94,7 +104,7 @@ if (isset($_POST['add_pro'])){
 //                }
         var_dump($img_arr_name);
         $rewrite = changeTitle($name);
-        $sql = "INSERT INTO `products` (`name`,`avatar`,`status`,`cate_id`,`user_id`) 
+        $sql = "INSERT INTO `products` (`name`,`avatar`,`status`,`cate_id`,`user_id`)
                         VALUES ('".$name."','".$img_avatar_name."','".$status."','".$cate."','".$user."')";
         if (mysqli_query($db,$sql)){
             $sql = 'select id from products ORDER BY id DESC LIMIT 1';
@@ -162,8 +172,8 @@ if (isset($_POST['add_pro'])){
                                 <?php }?>
                             </select>
                             <?php
-                            if (isset($errors) && in_array('cate_id',$errors)){
-                                echo '<p style="color: red;">(*) Bạn chưa chọn cate</p>';
+                            if (isset($errors['cate_id'])){
+                                echo '<p style="color: red;">'.$errors['cate_id'].'</p>';
                             }
                             ?>
                         </div>
@@ -176,8 +186,8 @@ if (isset($_POST['add_pro'])){
                                 <?php }?>
                             </select>
                             <?php
-                            if (isset($errors) && in_array('user_id',$errors)){
-                                echo '<p style="color: red;">(*) Bạn chưa chọn admin</p>';
+                            if (isset($errors['user_id'])){
+                                echo '<p style="color: red;">'.$errors['user_id'].'</p>';
                             }
                             ?>
                         </div>
@@ -185,8 +195,8 @@ if (isset($_POST['add_pro'])){
                             <label for="exampleInputPassword1">status</label>
                             <input type="text" class="form-control" name="status" placeholder="nhập status" value="<?php if (isset($_POST['status']) && $_POST['status'] != '') { echo $_POST['status']; }?>">
                             <?php
-                            if (isset($errors) && in_array('status',$errors)){
-                                echo '<p style="color: red;">(*) Bạn chưa nhập trạng thái</p>';
+                            if (isset($errors['status'])){
+                                echo '<p style="color: red;">'.$errors['status'].'</p>';
                             }
                             ?>
                         </div>
@@ -195,12 +205,8 @@ if (isset($_POST['add_pro'])){
                                 <h3 class="box-title">Ảnh đại diện </h3>
                                 <input type="file" id="input-file-disable-remove" name="avatar" class="dropify" data-show-remove="true" multiple value="" />
                                 <?php
-                                if (isset($errors) && in_array('img_name',$errors)){
-                                    echo '<p style="color: red;">(*) Bạn chưa chọn ảnh</p>';
-                                }
-
-                                if (isset($img_err) && in_array('type',$img_err)){
-                                    echo '<p style="color: red;">(*) Bạn nhập sai định dạng ảnh</p>';
+                                if (isset($errors['img'])){
+                                    echo '<p style="color: red;">'.$errors['img'].'</p>';
                                 }
                                 ?>
                             </div>
@@ -210,8 +216,8 @@ if (isset($_POST['add_pro'])){
                                 <h3 class="box-title">Ảnh sản phẩm </h3>
                                 <input type="file" id="input-file-disable-remove" name="image_pro[]" class="dropify" data-show-remove="true" multiple value="" />
                                 <?php
-                                if (isset($errors) && in_array('image_pro',$errors,true)){
-                                    echo '<p style="color: red;">(*) Bạn chưa chọn</p>';
+                                if (isset($errors['img_arr'])){
+                                    echo '<p style="color: red;">'.$errors['img_arr'].'</p>';
                                 }
                                 ?>
                             </div>

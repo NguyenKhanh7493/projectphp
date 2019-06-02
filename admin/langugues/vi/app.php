@@ -8,4 +8,5 @@
 
 return [
     'test cc' => 'đây là test',
+    'hhi'=> 'kahnsh'
 ];
