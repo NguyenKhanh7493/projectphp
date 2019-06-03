@@ -5,6 +5,7 @@
         header('location:/admin/login.php');
     }
 
+    
     include('config/define.php');
 
     include ('config/function.php');

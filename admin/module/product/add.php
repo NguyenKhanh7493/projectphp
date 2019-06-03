@@ -1,4 +1,5 @@
 <?php
+$db = include_once('config/database.php');
 $sql = "select * from users WHERE status = 1";
 $result = mysqli_query($db,$sql);
 $user_id = returnDataRow($result);
@@ -18,11 +19,13 @@ if (isset($_POST['add_pro'])){
     $img_arr = $_FILES['image_pro'];
 
     if(empty($name)){
-        $errors['name'] = translate('Please! input your name');
+        $errors['name'] = translate("1");
+        // $errors['name'] = translate('Please! input your name');
     }
 
     if (empty($cate)){
-        $errors['cate_id'] = translate('Please! input category');
+        // $errors['cate_id'] = translate('Please! input category');
+        $errors['cate_id'] = translate("2",'sys');
     }
     if (empty($user)){
         $errors['user_id'] = translate('Please! input user');
