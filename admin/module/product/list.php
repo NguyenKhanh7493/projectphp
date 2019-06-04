@@ -1,9 +1,5 @@
 <?php
-    $sql = "SELECT p.name as name_pro , p.avatar,p.user_id,p.cate_id,p.status,p.id,u.name as name_user,c.name as name_cate
-            FROM products p INNER JOIN cates c ON p.cate_id = c.id
-                            INNER JOIN  users u ON p.user_id = u.id LIMIT 2";
-    $result = mysqli_query($db,$sql);
-    $data = returnDataRow($result);
+    $db = include_once('config/database.php');
 
 
 
@@ -13,7 +9,7 @@
    $row = returnRow($result);
    $total_records = $row['total'];
    $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-   $limit = 2;
+   $limit = 3;
    $total_page = ceil($total_records/$limit);
    if ($current_page > $total_page){
        $current_page = $total_page;
@@ -21,8 +17,11 @@
        $current_page = 1;
    }
    $start = ($current_page -1)*$limit;
-   $sql = "SELECT * FROM products LIMIT $start,$limit";
+   $sql = "SELECT p.name as name_pro , p.avatar,p.user_id,p.cate_id,p.status,p.id,u.name as name_user,c.name as name_cate
+            FROM products p INNER JOIN cates c ON p.cate_id = c.id
+                            INNER JOIN  users u ON p.user_id = u.id LIMIT $start,$limit";
    $result = mysqli_query($db,$sql);
+   $data = returnDataRow($result);
 //    pre($name);die();
 ?>
       <div class="row">
@@ -53,7 +52,7 @@
                     <img src="<?=base_url?>/admin/public/images/product/avatar/<?php echo $item['avatar']?>" width="80px;" height="80px;" alt="">
                   </td>
                   <td>
-                    <a href="<?=base_url?>/admin/module/product/edit.php" id="editItem"><i class="ti-pencil text-success"></i></a> |
+                    <a href="<?=base_url?>/admin/?module=product&action=edit&id=<?php echo $item['id']?>" id="editItem"><i class="ti-pencil text-success"></i></a> |
                     <a href="" class="proDelItem" data-msg="Bạn muốn xóa?"><i class="ti-trash text-danger"></i></a>
                   </td>
                 </tr>
@@ -73,7 +72,7 @@
                         <?php
 
                             if ($current_page > 1 && $total_page > 1){
-                                echo '<li><a href="/admin/module/product/list.php?page='.($current_page-1).'">&laquo;</a></li>';
+                                echo '<li><a href="/admin/?module=product&action=list?page='.($current_page-1).'">&laquo;</a></li>';
                             }
                         ?>
                         <?php
@@ -81,7 +80,7 @@
                                 if ($i == $current_page){
                                     echo '<li class="active"><a href="#">'.$i.'</a></li>';
                                 }else{
-                                    echo '<li><a href="/admin/module/product/list.php?page='.$i.'"">'.$i.'</a></li>';
+                                    echo '<li><a href="/admin/?module=product&action=list?page='.$i.'"">'.$i.'</a></li>';
                                 }
                             }
                         ?>

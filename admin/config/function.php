@@ -213,8 +213,8 @@
         $langugae = [];
         $folder_langague = isset($_SESSION['language']) ? $_SESSION['language'] : 'vi';
         $langugae = require_once(path_root.'langugues/'.$folder_langague.'/'.$file.'.php');
-        echo $key;
-        var_dump(isset($langugae[$key]));
+        // echo $key;
+        // var_dump(isset($langugae[$key]));
         return isset($langugae[$key])?$langugae[$key]:$key;
     }
 ?>

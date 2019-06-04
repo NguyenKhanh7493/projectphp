@@ -3,7 +3,10 @@ $db = include_once('config/database.php');
 $sql = "select * from users WHERE status = 1";
 $result = mysqli_query($db,$sql);
 $user_id = returnDataRow($result);
-pre($user_id);
+
+$sql = "select * from cates WHERE status = 1";
+$result = mysqli_query($db,$sql);
+$cate_id = returnDataRow($result);
 ?>
 
 
@@ -15,17 +18,14 @@ if (isset($_POST['add_pro'])){
     $user = $_POST['user_id'];
     $status = $_POST['status'];
     $img = $_FILES['avatar'];
-    $success = '';
     $img_arr = $_FILES['image_pro'];
 
     if(empty($name)){
-        $errors['name'] = translate("1");
-        // $errors['name'] = translate('Please! input your name');
+        $errors['name'] = translate("Please! input your name");
     }
 
     if (empty($cate)){
-        // $errors['cate_id'] = translate('Please! input category');
-        $errors['cate_id'] = translate("2",'sys');
+        $errors['cate_id'] = translate('Please! input category');
     }
     if (empty($user)){
         $errors['user_id'] = translate('Please! input user');
@@ -40,24 +40,22 @@ if (isset($_POST['add_pro'])){
         $errors['img_arr'] = translate('Please! input image product');
     }
 
-    $img_avatar_name = upload_avatar($img,'../../public/images/product/avatar/');
+    $img_avatar_name = upload_avatar($img,path_root.'public/images/product/avatar/');
     if (isset($img_avatar_name['errors'])){
         $errors['img_name'] = $img_avatar_name['errors'];
     }
+//    if (file_exists(path_root.'public/images/product/avatar/'.$img['name'])){
+//        $errors['img_name'] = "trùng ảnh";
+//    }
 
-    $img_arr_name = upload_images_arr($img_arr,'../../public/images/product/');
+    $img_arr_name = upload_images_arr($img_arr,path_root.'public/images/product/');
     if (isset($img_arr_name['errors'])){
 
         $errors['image_pro'] = $img_arr_name['errors'][0];
     }
 
 
-
-
-
     $rewrite = changeTitle($name);
-
-    //xong rồi đó a còn lại a check nốt hen, e làm a hiểểu k ?
 
     if($errors == null){
         $sql = "INSERT INTO `products` (`name`,`avatar`,`status`,`cate_id`,`user_id`) 
@@ -67,6 +65,14 @@ if (isset($_POST['add_pro'])){
         if(!$result){
             $errors['insert'] = translate('Database not found!');
         }else{
+            $sql = 'select id from products ORDER BY id DESC LIMIT 1';
+            $target = mysqli_query($db,$sql);
+            $id = 0;
+            $item_type = 2;
+            while ($item = mysqli_fetch_assoc($target)){
+                $id = $item['id'];
+                break;
+            }
             for ($i=0;$i< count($img_arr_name['success']);$i++){
                 $sql = "INSERT INTO `images` (`image_name`,`item_type`,`item_id`) VALUES ('".$img_arr_name['success'][$i]."','".$item_type."','".$id."')";
                 mysqli_query($db,$sql);
