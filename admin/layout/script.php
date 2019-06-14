@@ -18,6 +18,7 @@
 <!-- Custom Theme JavaScript -->
 <script src="<?=base_url?>/admin/assets/js/custom.min.js"></script>
 <script src="<?=base_url?>/admin/assets/js/dashboard1.js"></script>
+<script src="<?=base_url?>/admin/assets/js/myscript.js"></script>
 <!--Style Switcher -->
 <script src="<?=base_url?>/admin/assets/plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
 

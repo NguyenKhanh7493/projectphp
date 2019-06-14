@@ -1,5 +1,6 @@
 <?php
 $db = include_once('config/database.php');
+print_r($db);
 $id = $_GET['id'];
 $sql = 'select *
         from products WHERE id = '.$_GET['id'];
@@ -145,10 +146,10 @@ if (isset($_POST['edit_pro'])){
                 </div>
             </div>
             <?php foreach ($pImg as $item){?>
-            <div id="">
+            <div id="<?php echo $item['id']?>">
                 <div class="form-group" id="parentImg">
                     <img src="<?=base_url?>/admin/public/images/product/<?php echo $item['image_name']?>" alt="" width="150" id="pro_img">
-                    <a href="javascript:void(0)" class="clearImg text-danger delItemPro" type="button" data-id="" data-link="" data-msg="Bạn có muốn xóa ảnh này?"><i class="fa fa-times"></i></a>
+                    <a href="javascript:void(0)" class="clearImg text-danger delItemPro" type="button" data-id="<?php echo $item['id']?>" data-link="" data-msg="Bạn có muốn xóa ảnh này?"><i class="fa fa-times"></i></a>
                 </div>
             </div>
             <?php }?>
